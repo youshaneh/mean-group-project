@@ -1,8 +1,8 @@
 <div class="">
-  <h1>Add a new task</h1>
+  <h1>Create</h1>
 </div>
 <div class="">
-  <div class="col" style="margin:36px 0 16px 0">
+  <div class="col" style="margin:36px 0 16px 0; padding: 0;">
     <form (ngSubmit)="createNewTask(newTask)">
       <div class="form-group">
         <label>Created Date:</label> {{newTask.createdDateString}}
@@ -36,7 +36,7 @@
         </select>
       </div>
       <br>
-      <button class="btn btn-default" type="submit">Create</button>
+      <button class="btn btn-success" type="submit">Create</button>
     </form>
   </div>
 </div>

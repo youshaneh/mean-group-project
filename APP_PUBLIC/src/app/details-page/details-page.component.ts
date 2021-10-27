@@ -42,6 +42,10 @@ export class DetailsPageComponent implements OnInit {
   }
 
   public update(updateTask: any): void {
+    if(updateTask.name == ''){
+      alert('Name can\'t be empty');
+      return;
+    }
     updateTask.dueDate = new Date(updateTask.dueDateString);
     this.TaskDataService.updateTask(updateTask).then(() => {
       this.ngOnInit();

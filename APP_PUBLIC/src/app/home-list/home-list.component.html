@@ -1,9 +1,20 @@
-<ul class="list-group">
-  <li class="list-group-item" *ngFor="let task of tasks">
-    <span *ngIf="task.done" style="display: inline-block; width: 20px; color: green;">✔</span>
-    <span *ngIf="!task.done" style="display: inline-block; width: 20px; "></span>
-    <a routerLink="{{'task/' + task._id}}">
-      {{task.name}}
-    </a>
-  </li>
-</ul>
+<div class="" style="padding-top: 16px">
+  <a routerLink="create" type="button" class="btn btn-success" style="color: white;margin-bottom: 16px">Create</a> 
+  <div class="row" >
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let task of tasks" style="padding:6px; ">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span *ngIf="task.done" style="display: inline-block; width: 28px;">✔</span>
+            <span *ngIf="!task.done" style="display: inline-block; width: 28px; ">⚠</span>
+            {{task.name}}
+          </h5>
+          <p class="card-text" style="min-height: 50px;">{{task.description}}</p>
+          <div style="text-align: end;">
+            <a routerLink="{{'task/' + task._id}}" class="btn btn-info" >Detail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

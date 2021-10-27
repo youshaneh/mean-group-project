@@ -1,11 +1,12 @@
-<nav class="navbar navbar-default">
-  <div class="navbar-header"></div>
-  <ul class="nav navbar-nav" style="padding-left:15px">
-    <li class="nav-item"><a routerLink="">Todo</a></li>
-    <li class="nav-item"><a routerLink="create">Create</a></li>
-    <li class="nav-item"><a routerLink="about">About</a></li>
-  </ul>
+<nav class="navbar navbar-expand navbar-dark bg-dark" style="color:white">
+  <div class="container">
+    <ul class="navbar-nav" style="padding-left:15px">
+      <li class="nav-item"><a class="nav-link" routerLink="">Todo</a></li>
+      <!-- <li class="nav-item"><a class="nav-link" routerLink="create">Create</a></li> -->
+      <li class="nav-item"><a class="nav-link" routerLink="about">About</a></li>
+    </ul>
+  </div>
 </nav>
-<div class="panel panel-default" style="padding:0 15px;">
+<div class="container" style="margin-top: 22px;">
   <router-outlet></router-outlet>
 </div>

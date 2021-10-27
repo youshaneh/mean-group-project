@@ -1,25 +1,25 @@
 <div *ngIf="newTask">
   <div *ngIf="!editing">
-    <div class="">
+    <div class="" style="margin-bottom:6px">
       <h1>{{newTask.name}}</h1>
     </div>
     <div class="">
-      <div class="col" style="margin-bottom:16px">
+      <div style="margin-bottom:16px; font-size: 1.1em;">
         {{newTask.description}}
       </div>
     </div>
     <div class="">
-      <div class="col">
+      <div>
         <div>Created Date: {{newTask.createdDateString}}</div>
       </div>
     </div>
     <div class="">
-      <div class="col">
+      <div>
         <div>Due Date: {{newTask.dueDateString}}</div>
       </div>
     </div>
     <div class="">
-      <div class="col">
+      <div>
         <div>Priority:
           <span [ngSwitch]="newTask.priority">
             <span *ngSwitchCase="0">Low</span>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="">
-      <div class="col">
+      <div>
         <div>Done:
           <span [ngSwitch]="newTask.done">
             <span *ngSwitchCase="true">Yes</span>
@@ -48,7 +48,7 @@
   <div *ngIf="editing">
     <div class="">
       <h1>{{newTask.name}}</h1>
-      <div class="col" style="margin-bottom:16px">
+      <div style="margin-bottom:16px">
         <form (ngSubmit)="update(updateTask)">
           <div class="form-group">
             <label>Created Date:</label> {{updateTask.createdDateString}}

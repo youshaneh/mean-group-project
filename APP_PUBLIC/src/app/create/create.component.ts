@@ -29,6 +29,10 @@ export class CreateComponent implements OnInit {
   }
 
   public createNewTask(newTask):void {
+    if(this.newTask.name == ''){
+      alert('Name can\'t be empty');
+      return;
+    }
     newTask.createdDate = new Date(newTask.createdDateString);
     newTask.dueDate = new Date(newTask.dueDateString);
     this.TaskDataService.createTask(newTask).then(() => {
