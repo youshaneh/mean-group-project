@@ -1,0 +1,5 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let song of songs">
+    <a routerLink="{{'food/' + song._id}}">[{{song.artists}}] {{song.name}}</a>
+  </li>
+</ul>

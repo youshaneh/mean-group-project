@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .container
+    .row 
+      h1 #{title}
+    .row
+      .col(style="margin-bottom:16px")
+        form(action="/songs/add" method="post")
+          .form-group
+            span Name: 
+            input.form-control(name="name")
+          .form-group
+            span Artist: 
+            input.form-control(name="artists")
+          .form-group
+            span Length in second: 
+            input.form-control(name="length")
+          .form-group
+            span Release Year: 
+            input.form-control(name="releaseYear")
+          br
+          button.btn.btn-default(type="submit") Submit
