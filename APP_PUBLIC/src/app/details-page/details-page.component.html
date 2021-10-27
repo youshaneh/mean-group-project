@@ -1,56 +1,85 @@
-<div *ngIf="newSong">
+<div *ngIf="newTask">
   <div *ngIf="!editing">
     <div class="">
-      <h1>{{newSong.name}}</h1>
+      <h1>{{newTask.name}}</h1>
     </div>
     <div class="">
-      <div class="col" style="margin-bottom:16px"><span>Artists: </span>
-        <span *ngFor="let artist of newSong.artists"
-          style="background-color:#d0d0d0; margin-right:5px; padding:2px 5px">{{artist}}</span>
-      </div>
-    </div>
-    <div class="">
-      <div class="col">
-        <span *ngFor="let star of newSong.stars">{{star}}</span>
+      <div class="col" style="margin-bottom:16px">
+        {{newTask.description}}
       </div>
     </div>
     <div class="">
       <div class="col">
-        <div>Length: {{newSong.min}}:{{newSong.sec}}</div>
+        <div>Created Date: {{newTask.createdDateString}}</div>
       </div>
     </div>
-    <div class="" style="margin-bottom:16px">
+    <div class="">
       <div class="col">
-        <div>Release Year: {{newSong.releaseYear}}</div>
+        <div>Due Date: {{newTask.dueDateString}}</div>
       </div>
     </div>
-    <div style="margin-bottom:24px">
+    <div class="">
+      <div class="col">
+        <div>Priority:
+          <span [ngSwitch]="newTask.priority">
+            <span *ngSwitchCase="0">Low</span>
+            <span *ngSwitchCase="1">Mediun</span>
+            <span *ngSwitchCase="2">High</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="col">
+        <div>Done:
+          <span [ngSwitch]="newTask.done">
+            <span *ngSwitchCase="true">Yes</span>
+            <span *ngSwitchCase="false">No</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 16px; margin-bottom:24px">
       <button class="btn btn-primary" (click)="edit(true)">Edit</button>
-      <button class="btn btn-danger" (click)="delete(newSong)" style="margin-left:14px">Delete</button>
+      <button class="btn btn-danger" (click)="delete(newTask)" style="margin-left:14px">Delete</button>
     </div>
   </div>
   
   <div *ngIf="editing">
     <div class="">
-      <h1>{{newSong.name}}</h1>
+      <h1>{{newTask.name}}</h1>
       <div class="col" style="margin-bottom:16px">
-        <form (ngSubmit)="update(updateSong)">
+        <form (ngSubmit)="update(updateTask)">
+          <div class="form-group">
+            <label>Created Date:</label> {{updateTask.createdDateString}}
+          </div>
           <div class="form-group">
             <label for="name">Name: </label>
-            <input [(ngModel)]="updateSong.name" id="name" name="name" class="form-control" required="required">
+            <input [(ngModel)]="updateTask.name" id="name" name="name" class="form-control" required="required">
           </div>
           <div class="form-group">
-            <label for="artists">Artist: </label>
-            <input [(ngModel)]="updateSong.artists" id="artists" name="artists" class="form-control" required="required">
-          </div>
-          <div class="form-group">
-            <label for="length">Length in second: </label>
-            <input [(ngModel)]="updateSong.length" id="length" name="length" class="form-control" required="required">
-          </div>
-          <div class="form-group">
-            <label for="releaseYear">Release Year: </label>
-            <input [(ngModel)]="updateSong.releaseYear" id="releaseYear" name="releaseYear" class="form-control"
+            <label for="description">Description: </label>
+            <input [(ngModel)]="updateTask.description" id="description" name="description" class="form-control"
               required="required">
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Due Date: </label>
+            <input [(ngModel)]="updateTask.dueDateString" type="date" id="dueDate" name="dueDate" class="form-control" required="required">
+          </div>
+          <div class="form-group">
+            <label for="priority">Priority: </label>
+            <select [(ngModel)]="updateTask.priority" id="priority" name="priority" class="form-control" required="required">
+              <option [value]="0" selected>Low</option>          
+              <option [value]="1">Medium</option>          
+              <option [value]="2">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="done">Done: </label>
+            <select [(ngModel)]="updateTask.done" id="done" name="done" class="form-control" required="required">
+              <option [value]="false" selected>No</option>          
+              <option [value]="true">Yes</option>
+            </select>
           </div>
           <br>
           <div style="margin-bottom:14px">

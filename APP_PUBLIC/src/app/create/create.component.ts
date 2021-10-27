@@ -1,29 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Song } from '../song';
-import { FoodDataService } from '../song-data.service';
+import { Task } from '../task';
+import { TaskDataService } from '../task-data.service';
 import { Router} from '@angular/router';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [FoodDataService]
+  providers: [TaskDataService]
 })
 export class CreateComponent implements OnInit {
+  public date: Date = new Date();
+  public dateString = `${this.date.getFullYear()}-${this.date.getMonth()+1}-${this.date.getDate()}`
 
-  public newSong: Song = {
-    name: '',
-    artists: [],
-    rating: 0
+  public newTask = {
+    name: "",
+    description: "",
+    createdDateString: this.dateString,
+    dueDateString: this.dateString,
+    priority: 0,
+    done: false
   }
 
-  constructor(private FoodDataService: FoodDataService, private router: Router) { }
+  constructor(private TaskDataService: TaskDataService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  public createNewSong(newSong: Song):void {
-    this.FoodDataService.createFood(newSong).then(() => {
+  public createNewTask(newTask):void {
+    newTask.createdDate = new Date(newTask.createdDateString);
+    newTask.dueDate = new Date(newTask.dueDateString);
+    this.TaskDataService.createTask(newTask).then(() => {
       this.router.navigate(['/']);
     });
   }

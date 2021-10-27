@@ -40,7 +40,7 @@ import { DetailsPageComponent } from './details-page/details-page.component';
         component: CreateComponent
       },
       {
-        path: 'food/:foodid',
+        path: 'task/:taskid',
         component: DetailsPageComponent
       }
     ])
@@ -49,3 +49,4 @@ import { DetailsPageComponent } from './details-page/details-page.component';
   bootstrap: [FrameworkComponent]
 })
 export class AppModule { }
+// ng build --output-path build

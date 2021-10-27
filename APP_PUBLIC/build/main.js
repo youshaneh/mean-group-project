@@ -41,7 +41,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>About my site</h1>\n<p>I'm You-Sheng, a full-stack developer.</p>"
+module.exports = "<h1>Team Members</h1>\n<div class=\"container\">\n  <br>\n  <p>YOU-SHENG HUANG</p>\n  <p>ADARSH PUTHUSSERY</p>\n  <p>NITIN JOHN FINOLD</p>\n</div>\n"
 
 /***/ }),
 
@@ -159,7 +159,7 @@ var AppModule = /** @class */ (function () {
                         component: _create_create_component__WEBPACK_IMPORTED_MODULE_11__["CreateComponent"]
                     },
                     {
-                        path: 'food/:foodid',
+                        path: 'task/:taskid',
                         component: _details_page_details_page_component__WEBPACK_IMPORTED_MODULE_12__["DetailsPageComponent"]
                     }
                 ])
@@ -171,6 +171,7 @@ var AppModule = /** @class */ (function () {
     return AppModule;
 }());
 
+// ng build --output-path build
 
 
 /***/ }),
@@ -193,7 +194,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n  <div class=\"\">\n    <h1>Add a new song</h1>\n  </div>\n  <div class=\"\">\n    <div class=\"col\" style=\"margin-bottom:16px\">\n      <form (ngSubmit)=\"createNewSong(newSong)\">\n        <div class=\"form-group\">\n          <label for=\"name\">Name: </label>\n          <input [(ngModel)]=\"newSong.name\" id=\"name\" name=\"name\" class=\"form-control\" required=\"required\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"artists\">Artist: </label>\n          <input [(ngModel)]=\"newSong.artists\" id=\"artists\" name=\"artists\" class=\"form-control\" required=\"required\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"length\">Length in second: </label>\n          <input [(ngModel)]=\"newSong.length\" id=\"length\" name=\"length\" class=\"form-control\" required=\"required\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"releaseYear\">Release Year: </label>\n          <input [(ngModel)]=\"newSong.releaseYear\" id=\"releaseYear\" name=\"releaseYear\" class=\"form-control\"\n            required=\"required\">\n        </div>\n        <br>\n        <button class=\"btn btn-default\" type=\"submit\">Create</button>\n      </form>\n    </div>\n  </div>"
+module.exports = "<div class=\"\">\n  <h1>Add a new task</h1>\n</div>\n<div class=\"\">\n  <div class=\"col\" style=\"margin:36px 0 16px 0\">\n    <form (ngSubmit)=\"createNewTask(newTask)\">\n      <div class=\"form-group\">\n        <label>Created Date:</label> {{newTask.createdDateString}}\n      </div>\n      <div class=\"form-group\">\n        <label for=\"name\">Name: </label>\n        <input [(ngModel)]=\"newTask.name\" id=\"name\" name=\"name\" class=\"form-control\" required=\"required\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"description\">Description: </label>\n        <input [(ngModel)]=\"newTask.description\" id=\"description\" name=\"description\" class=\"form-control\"\n          required=\"required\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"dueDate\">Due Date: </label>\n        <input [(ngModel)]=\"newTask.dueDateString\" type=\"date\" id=\"dueDate\" name=\"dueDate\" class=\"form-control\" required=\"required\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"priority\">Priority: </label>\n        <select [(ngModel)]=\"newTask.priority\" id=\"priority\" name=\"priority\" class=\"form-control\" required=\"required\">\n          <option [value]=\"0\" selected>Low</option>          \n          <option [value]=\"1\">Medium</option>          \n          <option [value]=\"2\">High</option>\n        </select>\n      </div>\n      <div class=\"form-group\">\n        <label for=\"done\">Done: </label>\n        <select [(ngModel)]=\"newTask.done\" id=\"done\" name=\"done\" class=\"form-control\" required=\"required\">\n          <option [value]=\"false\" selected>No</option>          \n          <option [value]=\"true\">Yes</option>\n        </select>\n      </div>\n      <br>\n      <button class=\"btn btn-default\" type=\"submit\">Create</button>\n    </form>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -208,7 +209,7 @@ module.exports = "\n  <div class=\"\">\n    <h1>Add a new song</h1>\n  </div>\n 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateComponent", function() { return CreateComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _song_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../song-data.service */ "./src/app/song-data.service.ts");
+/* harmony import */ var _task_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../task-data.service */ "./src/app/task-data.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -223,20 +224,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var CreateComponent = /** @class */ (function () {
-    function CreateComponent(FoodDataService, router) {
-        this.FoodDataService = FoodDataService;
+    function CreateComponent(TaskDataService, router) {
+        this.TaskDataService = TaskDataService;
         this.router = router;
-        this.newSong = {
-            name: '',
-            artists: [],
-            rating: 0
+        this.date = new Date();
+        this.dateString = this.date.getFullYear() + "-" + (this.date.getMonth() + 1) + "-" + this.date.getDate();
+        this.newTask = {
+            name: "",
+            description: "",
+            createdDateString: this.dateString,
+            dueDateString: this.dateString,
+            priority: 0,
+            done: false
         };
     }
     CreateComponent.prototype.ngOnInit = function () {
     };
-    CreateComponent.prototype.createNewSong = function (newSong) {
+    CreateComponent.prototype.createNewTask = function (newTask) {
         var _this = this;
-        this.FoodDataService.createFood(newSong).then(function () {
+        newTask.createdDate = new Date(newTask.createdDateString);
+        newTask.dueDate = new Date(newTask.dueDateString);
+        this.TaskDataService.createTask(newTask).then(function () {
             _this.router.navigate(['/']);
         });
     };
@@ -245,9 +253,9 @@ var CreateComponent = /** @class */ (function () {
             selector: 'app-create',
             template: __webpack_require__(/*! ./create.component.html */ "./src/app/create/create.component.html"),
             styles: [__webpack_require__(/*! ./create.component.css */ "./src/app/create/create.component.css")],
-            providers: [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"]]
+            providers: [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"]]
         }),
-        __metadata("design:paramtypes", [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        __metadata("design:paramtypes", [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], CreateComponent);
     return CreateComponent;
 }());
@@ -263,7 +271,7 @@ var CreateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"newSong\">\n  <div *ngIf=\"!editing\">\n    <div class=\"\">\n      <h1>{{newSong.name}}</h1>\n    </div>\n    <div class=\"\">\n      <div class=\"col\" style=\"margin-bottom:16px\"><span>Artists: </span>\n        <span *ngFor=\"let artist of newSong.artists\"\n          style=\"background-color:#d0d0d0; margin-right:5px; padding:2px 5px\">{{artist}}</span>\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <span *ngFor=\"let star of newSong.stars\">{{star}}</span>\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <div>Length: {{newSong.min}}:{{newSong.sec}}</div>\n      </div>\n    </div>\n    <div class=\"\" style=\"margin-bottom:16px\">\n      <div class=\"col\">\n        <div>Release Year: {{newSong.releaseYear}}</div>\n      </div>\n    </div>\n    <div style=\"margin-bottom:24px\">\n      <button class=\"btn btn-primary\" (click)=\"edit(true)\">Edit</button>\n      <button class=\"btn btn-danger\" (click)=\"delete(newSong)\" style=\"margin-left:14px\">Delete</button>\n    </div>\n  </div>\n  \n  <div *ngIf=\"editing\">\n    <div class=\"\">\n      <h1>{{newSong.name}}</h1>\n      <div class=\"col\" style=\"margin-bottom:16px\">\n        <form (ngSubmit)=\"update(updateSong)\">\n          <div class=\"form-group\">\n            <label for=\"name\">Name: </label>\n            <input [(ngModel)]=\"updateSong.name\" id=\"name\" name=\"name\" class=\"form-control\" required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"artists\">Artist: </label>\n            <input [(ngModel)]=\"updateSong.artists\" id=\"artists\" name=\"artists\" class=\"form-control\" required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"length\">Length in second: </label>\n            <input [(ngModel)]=\"updateSong.length\" id=\"length\" name=\"length\" class=\"form-control\" required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"releaseYear\">Release Year: </label>\n            <input [(ngModel)]=\"updateSong.releaseYear\" id=\"releaseYear\" name=\"releaseYear\" class=\"form-control\"\n              required=\"required\">\n          </div>\n          <br>\n          <div style=\"margin-bottom:14px\">\n            <button class=\"btn btn-success\" type=\"submit\">Save</button>\n            <button class=\"btn btn-default\" (click)=\"edit(false)\" style=\"margin-left:14px\">Cancel</button>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div *ngIf=\"newTask\">\n  <div *ngIf=\"!editing\">\n    <div class=\"\">\n      <h1>{{newTask.name}}</h1>\n    </div>\n    <div class=\"\">\n      <div class=\"col\" style=\"margin-bottom:16px\">\n        {{newTask.description}}\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <div>Created Date: {{newTask.createdDateString}}</div>\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <div>Due Date: {{newTask.dueDateString}}</div>\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <div>Priority:\n          <span [ngSwitch]=\"newTask.priority\">\n            <span *ngSwitchCase=\"0\">Low</span>\n            <span *ngSwitchCase=\"1\">Mediun</span>\n            <span *ngSwitchCase=\"2\">High</span>\n          </span>\n        </div>\n      </div>\n    </div>\n    <div class=\"\">\n      <div class=\"col\">\n        <div>Done:\n          <span [ngSwitch]=\"newTask.done\">\n            <span *ngSwitchCase=\"true\">Yes</span>\n            <span *ngSwitchCase=\"false\">No</span>\n          </span>\n        </div>\n      </div>\n    </div>\n    <div style=\"margin-top: 16px; margin-bottom:24px\">\n      <button class=\"btn btn-primary\" (click)=\"edit(true)\">Edit</button>\n      <button class=\"btn btn-danger\" (click)=\"delete(newTask)\" style=\"margin-left:14px\">Delete</button>\n    </div>\n  </div>\n  \n  <div *ngIf=\"editing\">\n    <div class=\"\">\n      <h1>{{newTask.name}}</h1>\n      <div class=\"col\" style=\"margin-bottom:16px\">\n        <form (ngSubmit)=\"update(updateTask)\">\n          <div class=\"form-group\">\n            <label>Created Date:</label> {{updateTask.createdDateString}}\n          </div>\n          <div class=\"form-group\">\n            <label for=\"name\">Name: </label>\n            <input [(ngModel)]=\"updateTask.name\" id=\"name\" name=\"name\" class=\"form-control\" required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"description\">Description: </label>\n            <input [(ngModel)]=\"updateTask.description\" id=\"description\" name=\"description\" class=\"form-control\"\n              required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"dueDate\">Due Date: </label>\n            <input [(ngModel)]=\"updateTask.dueDateString\" type=\"date\" id=\"dueDate\" name=\"dueDate\" class=\"form-control\" required=\"required\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"priority\">Priority: </label>\n            <select [(ngModel)]=\"updateTask.priority\" id=\"priority\" name=\"priority\" class=\"form-control\" required=\"required\">\n              <option [value]=\"0\" selected>Low</option>          \n              <option [value]=\"1\">Medium</option>          \n              <option [value]=\"2\">High</option>\n            </select>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"done\">Done: </label>\n            <select [(ngModel)]=\"updateTask.done\" id=\"done\" name=\"done\" class=\"form-control\" required=\"required\">\n              <option [value]=\"false\" selected>No</option>          \n              <option [value]=\"true\">Yes</option>\n            </select>\n          </div>\n          <br>\n          <div style=\"margin-bottom:14px\">\n            <button class=\"btn btn-success\" type=\"submit\">Save</button>\n            <button class=\"btn btn-default\" (click)=\"edit(false)\" style=\"margin-left:14px\">Cancel</button>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -278,7 +286,7 @@ module.exports = "<div *ngIf=\"newSong\">\n  <div *ngIf=\"!editing\">\n    <div 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DetailsPageComponent", function() { return DetailsPageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _song_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../song-data.service */ "./src/app/song-data.service.ts");
+/* harmony import */ var _task_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../task-data.service */ "./src/app/task-data.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -296,42 +304,41 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var DetailsPageComponent = /** @class */ (function () {
-    function DetailsPageComponent(FoodDataService, route, router) {
-        this.FoodDataService = FoodDataService;
+    function DetailsPageComponent(TaskDataService, route, router) {
+        this.TaskDataService = TaskDataService;
         this.route = route;
         this.router = router;
     }
     DetailsPageComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (params) { return _this.FoodDataService.getSingleFood(params['foodid']); }))
-            .subscribe(function (newSong) {
-            _this.newSong = newSong;
-            _this.newSong.min = Math.floor(newSong.length / 60);
-            _this.newSong.sec = pad(newSong.length % 60, 2);
-            _this.newSong.stars = ['☆', '☆', '☆', '☆', '☆'];
-            for (var i = 0; i < newSong.rating; i++) {
-                _this.newSong.stars[i] = '★';
-            }
+        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (params) { return _this.TaskDataService.getSingleTask(params['taskid']); }))
+            .subscribe(function (newTask) {
+            _this.newTask = newTask;
+            _this.newTask.createdDateString = _this.getDateString(_this.newTask.createdDate);
+            _this.newTask.dueDateString = _this.getDateString(_this.newTask.dueDate);
             _this.editing = false;
-            function pad(input, length) {
-                return Array(length - Math.floor(Math.log10(input))).join('0') + input;
-            }
         });
     };
     DetailsPageComponent.prototype.edit = function (editing) {
-        var _a = this.newSong, name = _a.name, artists = _a.artists, length = _a.length, releaseYear = _a.releaseYear, _id = _a._id;
-        this.updateSong = { name: name, artists: artists, length: length, releaseYear: releaseYear, _id: _id };
+        var _a = this.newTask, name = _a.name, description = _a.description, createdDate = _a.createdDate, dueDate = _a.dueDate, priority = _a.priority, done = _a.done, createdDateString = _a.createdDateString, dueDateString = _a.dueDateString, _id = _a._id;
+        this.updateTask = { name: name, description: description, createdDate: createdDate, dueDate: dueDate, priority: priority, done: done, createdDateString: createdDateString, dueDateString: dueDateString, _id: _id };
         this.editing = editing;
     };
-    DetailsPageComponent.prototype.update = function (updateSong) {
+    DetailsPageComponent.prototype.getDateString = function (date) {
+        date = new Date(date);
+        date.setDate(date.getDate() + 1);
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    };
+    DetailsPageComponent.prototype.update = function (updateTask) {
         var _this = this;
-        this.FoodDataService.updateFood(updateSong).then(function () {
+        updateTask.dueDate = new Date(updateTask.dueDateString);
+        this.TaskDataService.updateTask(updateTask).then(function () {
             _this.ngOnInit();
         });
     };
-    DetailsPageComponent.prototype.delete = function (updateSong) {
+    DetailsPageComponent.prototype.delete = function (updateTask) {
         var _this = this;
-        this.FoodDataService.deleteFood(updateSong).then(function () {
+        this.TaskDataService.deleteTask(updateTask).then(function () {
             _this.router.navigate(['/']);
         });
     };
@@ -340,9 +347,9 @@ var DetailsPageComponent = /** @class */ (function () {
             selector: 'app-details-page',
             template: __webpack_require__(/*! ./details-page.component.html */ "./src/app/details-page/details-page.component.html"),
             styles: [],
-            providers: [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"]]
+            providers: [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"]]
         }),
-        __metadata("design:paramtypes", [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"],
+        __metadata("design:paramtypes", [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], DetailsPageComponent);
     return DetailsPageComponent;
@@ -370,7 +377,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"navbar-header\"></div>\n  <ul class=\"nav navbar-nav\" style=\"padding-left:15px\">\n    <li class=\"nav-item\"><a routerLink=\"\">Songs</a></li>\n    <li class=\"nav-item\"><a routerLink=\"about\">About</a></li>\n    <li class=\"nav-item\"><a routerLink=\"create\">Create</a></li>\n  </ul>\n</nav>\n<div class=\"panel panel-default\" style=\"padding:0 15px;\">\n  <router-outlet></router-outlet>\n</div>"
+module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"navbar-header\"></div>\n  <ul class=\"nav navbar-nav\" style=\"padding-left:15px\">\n    <li class=\"nav-item\"><a routerLink=\"\">Todo</a></li>\n    <li class=\"nav-item\"><a routerLink=\"create\">Create</a></li>\n    <li class=\"nav-item\"><a routerLink=\"about\">About</a></li>\n  </ul>\n</nav>\n<div class=\"panel panel-default\" style=\"padding:0 15px;\">\n  <router-outlet></router-outlet>\n</div>"
 
 /***/ }),
 
@@ -500,7 +507,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"list-group\">\r\n  <li class=\"list-group-item\" *ngFor=\"let song of songs\">\r\n    <a routerLink=\"{{'food/' + song._id}}\">[{{song.artists}}] {{song.name}}</a>\r\n  </li>\r\n</ul>"
+module.exports = "<ul class=\"list-group\">\r\n  <li class=\"list-group-item\" *ngFor=\"let task of tasks\">\r\n    <span *ngIf=\"task.done\" style=\"display: inline-block; width: 20px; color: green;\">✔</span>\r\n    <span *ngIf=\"!task.done\" style=\"display: inline-block; width: 20px; \"></span>\r\n    <a routerLink=\"{{'task/' + task._id}}\">\r\n      {{task.name}}\r\n    </a>\r\n  </li>\r\n</ul>"
 
 /***/ }),
 
@@ -515,7 +522,7 @@ module.exports = "<ul class=\"list-group\">\r\n  <li class=\"list-group-item\" *
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeListComponent", function() { return HomeListComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _song_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../song-data.service */ "./src/app/song-data.service.ts");
+/* harmony import */ var _task_data_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../task-data.service */ "./src/app/task-data.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -534,10 +541,10 @@ var HomeListComponent = /** @class */ (function () {
     HomeListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.foodService
-            .getFoods()
-            .then(function (songs) {
-            _this.songs = songs.map(function (song) {
-                return song;
+            .getTasks()
+            .then(function (tasks) {
+            _this.tasks = tasks.map(function (task) {
+                return task;
             });
         });
     };
@@ -546,9 +553,9 @@ var HomeListComponent = /** @class */ (function () {
             selector: 'app-home-list',
             template: __webpack_require__(/*! ./home-list.component.html */ "./src/app/home-list/home-list.component.html"),
             styles: [__webpack_require__(/*! ./home-list.component.css */ "./src/app/home-list/home-list.component.css")],
-            providers: [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"]]
+            providers: [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"]]
         }),
-        __metadata("design:paramtypes", [_song_data_service__WEBPACK_IMPORTED_MODULE_1__["FoodDataService"]])
+        __metadata("design:paramtypes", [_task_data_service__WEBPACK_IMPORTED_MODULE_1__["TaskDataService"]])
     ], HomeListComponent);
     return HomeListComponent;
 }());
@@ -575,7 +582,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Music list</h1>\n<app-home-list></app-home-list>"
+module.exports = "<h1>Todo list</h1>\n<app-home-list></app-home-list>"
 
 /***/ }),
 
@@ -604,7 +611,7 @@ var HomepageComponent = /** @class */ (function () {
     function HomepageComponent() {
         this.pageContent = {
             header: {
-                title: 'My Food List',
+                title: '',
                 body: ''
             }
         };
@@ -626,16 +633,16 @@ var HomepageComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/song-data.service.ts":
+/***/ "./src/app/task-data.service.ts":
 /*!**************************************!*\
-  !*** ./src/app/song-data.service.ts ***!
+  !*** ./src/app/task-data.service.ts ***!
   \**************************************/
-/*! exports provided: FoodDataService */
+/*! exports provided: TaskDataService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FoodDataService", function() { return FoodDataService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskDataService", function() { return TaskDataService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -649,50 +656,49 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-var FoodDataService = /** @class */ (function () {
-    function FoodDataService(http) {
+var TaskDataService = /** @class */ (function () {
+    function TaskDataService(http) {
         this.http = http;
-        this.foodsUrl = 'http://localhost:3000/api/songs';
+        this.tasksUrl = 'http://localhost:3000/api/tasks';
     }
-    // get("/api/foods")
-    FoodDataService.prototype.getFoods = function () {
-        return this.http.get(this.foodsUrl)
+    TaskDataService.prototype.getTasks = function () {
+        return this.http.get(this.tasksUrl)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
-    FoodDataService.prototype.getSingleFood = function (foodId) {
-        return this.http.get(this.foodsUrl + '/' + foodId)
+    TaskDataService.prototype.getSingleTask = function (taskId) {
+        return this.http.get(this.tasksUrl + '/' + taskId)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
-    FoodDataService.prototype.createFood = function (newFood) {
-        return this.http.post(this.foodsUrl, newFood)
+    TaskDataService.prototype.createTask = function (newTask) {
+        return this.http.post(this.tasksUrl, newTask)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
-    FoodDataService.prototype.updateFood = function (newFood) {
-        return this.http.put(this.foodsUrl + '/' + newFood['_id'], newFood)
+    TaskDataService.prototype.updateTask = function (newTask) {
+        return this.http.put(this.tasksUrl + '/' + newTask['_id'], newTask)
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
-    FoodDataService.prototype.deleteFood = function (newFood) {
-        return this.http.delete(this.foodsUrl + '/' + newFood['_id'])
+    TaskDataService.prototype.deleteTask = function (newTask) {
+        return this.http.delete(this.tasksUrl + '/' + newTask['_id'])
             .toPromise()
             .then(function (response) { return response; })
             .catch(this.handleError);
     };
-    FoodDataService.prototype.handleError = function (error) {
+    TaskDataService.prototype.handleError = function (error) {
         console.log("error");
     };
-    FoodDataService = __decorate([
+    TaskDataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], FoodDataService);
-    return FoodDataService;
+    ], TaskDataService);
+    return TaskDataService;
 }());
 
 
@@ -760,7 +766,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\yoush\Desktop\conestoga\Database_Connectivity\individual_project\APP_PUBLIC\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\yoush\Desktop\conestoga\Database_Connectivity\group_project\APP_PUBLIC\src\main.ts */"./src/main.ts");
 
 
 /***/ })

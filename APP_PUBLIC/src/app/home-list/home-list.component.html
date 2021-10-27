@@ -1,5 +1,9 @@
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let song of songs">
-    <a routerLink="{{'food/' + song._id}}">[{{song.artists}}] {{song.name}}</a>
+  <li class="list-group-item" *ngFor="let task of tasks">
+    <span *ngIf="task.done" style="display: inline-block; width: 20px; color: green;">✔</span>
+    <span *ngIf="!task.done" style="display: inline-block; width: 20px; "></span>
+    <a routerLink="{{'task/' + task._id}}">
+      {{task.name}}
+    </a>
   </li>
 </ul>

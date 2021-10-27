@@ -555,7 +555,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\yoush\Desktop\conestoga\Database_Connectivity\individual_project\APP_PUBLIC\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\Users\yoush\Desktop\conestoga\Database_Connectivity\group_project\APP_PUBLIC\src\styles.css */"./src/styles.css");
 
 
 /***/ })

@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Song } from '../song';
-import { FoodDataService } from '../song-data.service';
+import { Task } from '../task';
+import { TaskDataService } from '../task-data.service';
 
 @Component({
   selector: 'app-home-list',
   templateUrl: './home-list.component.html',
   styleUrls: ['./home-list.component.css'],
-  providers: [FoodDataService]
+  providers: [TaskDataService]
 })
 
 export class HomeListComponent implements OnInit {
 
-  songs: Song[]
+  tasks: Task[]
 
-  constructor(private foodService: FoodDataService) { }
+  constructor(private foodService: TaskDataService) { }
 
   ngOnInit() {
      this.foodService
-      .getFoods()
-      .then((songs: Song[]) => {
-        this.songs = songs.map(song => {
-          return song;
+      .getTasks()
+      .then((tasks: Task[]) => {
+        this.tasks = tasks.map(task => {
+          return task;
         });
       });
   }

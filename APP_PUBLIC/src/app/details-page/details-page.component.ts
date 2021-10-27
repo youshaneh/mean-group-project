@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FoodDataService } from "../song-data.service";
-import { Song } from "../song";
+import { TaskDataService } from "../task-data.service";
+import { Task } from "../task";
 import { ActivatedRoute, Params } from "@angular/router";
 import { switchMap } from "rxjs/operators";
 import { Router} from '@angular/router';
@@ -9,48 +9,47 @@ import { Router} from '@angular/router';
   selector: 'app-details-page',
   templateUrl: './details-page.component.html',
   styles: [],
-  providers: [FoodDataService]
+  providers: [TaskDataService]
 })
 export class DetailsPageComponent implements OnInit {
-  constructor(private FoodDataService: FoodDataService,
+  constructor(private TaskDataService: TaskDataService,
     private route: ActivatedRoute,  private router: Router) { }
 
-  newSong: any;
-  updateSong: any;
+  newTask: any;
+  updateTask: any;
   editing: boolean;
 
   ngOnInit(): void {
-    this.route.params.pipe(switchMap((params: Params) => this.FoodDataService.getSingleFood(params['foodid'])))
-      .subscribe((newSong: any) => {
-        this.newSong = newSong;
-        this.newSong.min = Math.floor(newSong.length / 60);
-        this.newSong.sec = pad(newSong.length % 60, 2);
-        this.newSong.stars = ['☆', '☆', '☆', '☆', '☆'];
-        for (let i = 0; i < newSong.rating; i++) {
-          this.newSong.stars[i] = '★';
-        }
+    this.route.params.pipe(switchMap((params: Params) => this.TaskDataService.getSingleTask(params['taskid'])))
+      .subscribe((newTask: any) => {
+        this.newTask = newTask;
+        this.newTask.createdDateString =  this.getDateString(this.newTask.createdDate);
+        this.newTask.dueDateString =  this.getDateString(this.newTask.dueDate);
         this.editing = false;
-
-        function pad(input, length) {
-          return Array(length - Math.floor(Math.log10(input))).join('0') + input;
-        }
       })
   }
 
   public edit(editing: boolean): void {
-    let { name, artists, length, releaseYear, _id } = this.newSong;
-    this.updateSong = { name, artists, length, releaseYear, _id };
+    let { name, description, createdDate, dueDate, priority, done, createdDateString, dueDateString, _id } = this.newTask;
+    this.updateTask = { name, description, createdDate, dueDate, priority, done, createdDateString, dueDateString, _id };
     this.editing = editing;
   }
 
-  public update(updateSong: Song): void {
-    this.FoodDataService.updateFood(updateSong).then(() => {
+  private getDateString(date){
+    date = new Date(date);
+    date.setDate(date.getDate() +1);
+    return`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+  }
+
+  public update(updateTask: any): void {
+    updateTask.dueDate = new Date(updateTask.dueDateString);
+    this.TaskDataService.updateTask(updateTask).then(() => {
       this.ngOnInit();
     });
   }
 
-  public delete(updateSong: Song): void {
-    this.FoodDataService.deleteFood(updateSong).then(() => {
+  public delete(updateTask: Task): void {
+    this.TaskDataService.deleteTask(updateTask).then(() => {
       this.router.navigate(['/']);
     });
   }

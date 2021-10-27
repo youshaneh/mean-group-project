@@ -14,7 +14,7 @@ export class HomepageComponent implements OnInit {
 
   pageContent = {
     header: {
-      title: 'My Food List',
+      title: '',
       body: ''
     }
   }
